@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ParsingStructs
+﻿namespace ParsingStructs
 {
     /// <summary>
     /// Представляет собой возможные типы <see cref="Id"/>
@@ -28,11 +22,11 @@ namespace ParsingStructs
         /// <summary>
         /// Тип идентификатора
         /// </summary>
-        public TypeIdent TypeId { get { return typeId; } }
+        public TypeIdent TypeId => typeId;
         /// <summary>
         /// Тип значения в идентификаторе
         /// </summary>
-        public TypeValue TypeVal { get { return typeVal; } }
+        public TypeValue TypeVal => typeVal;
         /// <summary>
         /// Имя идентификатора
         /// </summary>
