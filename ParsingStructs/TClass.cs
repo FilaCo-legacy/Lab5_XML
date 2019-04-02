@@ -23,7 +23,7 @@ namespace ParsingStructs
         protected override void Parse(string source)
         {
             if (!reg.IsMatch(source))
-                throw new Exception("Входная строка имела неверный формат");
+                throw new Exception("Input string has wrong format.");
             source = source.Trim(' ', '\n', '\r', ';');
             Regex regRemoveSpaces = new Regex(@"\s+");
             string[] inp = regRemoveSpaces.Split(source);
