@@ -3,11 +3,11 @@
     /// <summary>
     /// Представляет собой возможные типы <see cref="Id"/>
     /// </summary>
-    public enum TypeIdent { CLASS, CONST, VAR, METHOD };
+    public enum TypeIdent { CLASSES, CONSTS, VARS, METHODS, eCOUNT };
     /// <summary>
     /// Представляет собой возможные типы значения
     /// </summary>
-    public enum TypeValue { INT, FLOAT, BOOL, CHAR, STRING, CLASS };
+    public enum TypeValue { int_type, float_type, bool_type, char_type, string_type, class_type, eCOUNT };
     /// <summary>
     /// Класс, представляющий собой идентификатор в дереве
     /// </summary>
@@ -32,19 +32,10 @@
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Инициализирует объект класса <see cref="Id"/>
+        /// Выделение информации об объекте класса из строки ввода
         /// </summary>
-        /// <param name="valueName">Имя нового идентификатора</param>
-        public Id(string valueName)
-        {
-            Name = valueName;
-            hashVal = Name.GetHashCode();
-        }
-        /// <summary>
-        /// Возвращает строку, в которой указаны имя объекта класса <see cref="Id"/>, значение хэша, тип идентификатора 
-        /// и тип значения, записанный в нём
-        /// </summary>
-        /// <returns></returns>
+        /// <param name="source"></param>
+        protected abstract void Parse(string source);
         public override string ToString()
         {
             return string.Format($"{Name} | {hashVal} | {typeId} | {typeVal}");
@@ -63,6 +54,6 @@
                 pPow *= P;
             }
             return hash;
-        }
+        }         
     }
 }
