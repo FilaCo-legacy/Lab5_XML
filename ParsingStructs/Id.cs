@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace ParsingStructs
 {
     /// <summary>
@@ -9,6 +10,7 @@ namespace ParsingStructs
     /// Представляет собой возможные типы значения
     /// </summary>
     public enum TypeValue { int_type, float_type, bool_type, char_type, string_type, class_type, eCOUNT };
+    [Serializable]
     /// <summary>
     /// Класс, представляющий собой идентификатор в дереве
     /// </summary>
@@ -80,6 +82,10 @@ namespace ParsingStructs
                 pPow *= P;
             }
             return hash;
-        }         
+        }
+        public static bool operator <(Id ident1, Id ident2) => ident1.GetHashCode() < ident2.GetHashCode();
+        public static bool operator >(Id ident1, Id ident2) => ident1.GetHashCode() > ident2.GetHashCode();
+        public static bool operator ==(Id ident1, Id ident2) => ident1.GetHashCode() == ident2.GetHashCode();
+        public static bool operator !=(Id ident1, Id ident2) => ident1.GetHashCode() != ident2.GetHashCode();
     }
 }
