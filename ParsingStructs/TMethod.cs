@@ -55,27 +55,11 @@ namespace ParsingStructs
         {
             if (!reg.IsMatch(source))
                 throw new Exception("Input string has wrong format.");
-            source = source.TrimEnd(';');
+            source = source.TrimEnd(';', ' ');
             SeparateString(source, out string mainPart, out string argsPart);
             string[] inp = mainPart.Split(' ');
             // Определение типа значения метода
-            switch (inp[0])
-            {
-                case "int":
-                    typeVal = TypeValue.int_type;
-                    break;
-                case "float":
-                    typeVal = TypeValue.float_type;
-                    break;
-                case "bool":
-                    typeVal = TypeValue.bool_type;
-                    break;
-                case "char":
-                    typeVal = TypeValue.char_type;
-                    break;
-                default:
-                    throw new Exception("Undefined value type.");
-            }
+            DefineTypeValue(inp[0]);
             Name = inp[1];
             listParams = new TListParams(argsPart);
         }

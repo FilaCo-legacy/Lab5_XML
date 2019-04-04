@@ -40,7 +40,7 @@ namespace ParsingStructs
         {
             if (!reg.IsMatch(source))
                 throw new Exception("Input string has wrong format.");
-            source = source.Trim(';', ' ');
+            source = source.TrimEnd(';', ' ');
             source = source.Replace('=', ' ');
             Regex regRemoveSpaces = new Regex(@"\s+");
             string[] inp = regRemoveSpaces.Split(source);

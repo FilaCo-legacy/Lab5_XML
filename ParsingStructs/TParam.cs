@@ -6,7 +6,7 @@ namespace ParsingStructs
     /// <summary>
     /// Представляет собой возможные методы передачи параметров в <see cref="TMethod"/>
     /// </summary>
-    public enum TypeParam { VALUE, REFERENCE, OUT};
+    public enum TypeParam { param_val, param_ref, param_out};
     /// <summary>
     /// Класс, представляющий собой параметр в идентификаторе <see cref="TMethod"/>
     /// </summary>
@@ -29,13 +29,38 @@ namespace ParsingStructs
         /// </summary>
         public TypeParam TypePar => typeParam;
         /// <summary>
+        /// Определяет по строке тип значения идентификатора
+        /// </summary>
+        /// <param name="input"></param>
+        private void DefineTypeValue(string input)
+        {
+            switch (input)
+            {
+                case "int":
+                    typeVal = TypeValue.int_type;
+                    break;
+                case "float":
+                    typeVal = TypeValue.float_type;
+                    break;
+                case "bool":
+                    typeVal = TypeValue.bool_type;
+                    break;
+                case "char":
+                    typeVal = TypeValue.char_type;
+                    break;
+                default:
+                    typeVal = TypeValue.class_type;
+                    break;
+            }
+        }
+        /// <summary>
         /// Инициализирует объект класса <see cref="TParam"/> на основе информации из переданной строки
         /// </summary>
         /// <param name="source">Строка с информацией о новом объекте класса <see cref="TParam"/></param>
         public TParam(string source)
         {
             Parse(source);
-        }
+        }       
         /// <summary>
         /// Выделение информации об объекте класса из строки ввода
         /// </summary>
@@ -43,6 +68,23 @@ namespace ParsingStructs
         private void Parse(string source)
         {
             source = source.Trim(' ');
+            if (!reg.IsMatch(source))
+                throw new Exception("The argument string has wrong format.");
+            string[] inp = source.Split(' ');
+            switch (inp[0])
+            {
+                case "ref":
+                    typeParam = TypeParam.param_ref;
+                    break;
+                case "out":
+                    typeParam = TypeParam.param_out;
+                    break;
+                default:
+                    typeParam = TypeParam.param_val;
+                    DefineTypeValue(inp[0]);
+                    return;
+            }
+            DefineTypeValue(inp[1]);
         }
         /// <summary>
         /// Возвращает информацию о типе значения и методе передачи параметра

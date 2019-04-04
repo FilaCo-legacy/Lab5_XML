@@ -37,6 +37,31 @@ namespace ParsingStructs
         /// </summary>
         /// <param name="source"></param>
         protected abstract void Parse(string source);
+        /// <summary>
+        /// Определяет по строке тип значения идентификатора
+        /// </summary>
+        /// <param name="input"></param>
+        protected virtual void DefineTypeValue(string input)
+        {
+            switch (input)
+            {
+                case "int":
+                    typeVal = TypeValue.int_type;
+                    break;
+                case "float":
+                    typeVal = TypeValue.float_type;
+                    break;
+                case "bool":
+                    typeVal = TypeValue.bool_type;
+                    break;
+                case "char":
+                    typeVal = TypeValue.char_type;
+                    break;
+                default:
+                    typeVal = TypeValue.class_type;
+                    break;
+            }
+        }
         public override string ToString()
         {
             return string.Format($"{Name} | {hashVal} | {typeId} | {typeVal}");

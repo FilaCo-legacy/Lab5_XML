@@ -9,6 +9,7 @@ namespace ParsingStructs
     public class TVar : Id
     {
         private const string PATTERN_VAR = @"^\w+\s+(?!(ref|out|int|char|bool|string|float)\s*;)[^\d\s]\w*\s*;$";
+        private static Regex reg = new Regex(PATTERN_VAR);
         /// <summary>
         /// Инициализирует объект класса <see cref="TVar"/> на основе информации из переданной строки
         /// </summary>
@@ -20,7 +21,13 @@ namespace ParsingStructs
         }
         protected override void Parse(string source)
         {
-            source = source.Trim(';', ' ');
+            if (!reg.IsMatch(source))
+                throw new Exception("Input string has wrong format.");
+            source = source.TrimEnd(';', ' ');
+            string[] inp = source.Split(' ');
+            // Определение типа значения переменной
+            DefineTypeValue(inp[0]);
+            Name = inp[1];
         }
     }
 }

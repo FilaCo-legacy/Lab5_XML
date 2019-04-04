@@ -24,7 +24,7 @@ namespace ParsingStructs
         {
             if (!reg.IsMatch(source))
                 throw new Exception("Input string has wrong format.");
-            source = source.Trim(' ', ';');
+            source = source.TrimEnd(' ', ';');
             string[] inp = source.Split(' ');
             Name = inp[1];            
         }
