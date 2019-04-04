@@ -7,25 +7,32 @@ namespace ParsingStructs
     /// Класс, реализующий дерево идентификаторов
     /// </summary>
     public class TBinaryTree
-    {
-        private TBinaryTree left, right;
+    {        
         /// <summary>
         /// Идентификатор, хранящийся в вершине дерева
         /// </summary>
         public Id Data { get; set; }
+        /// <summary>
+        /// Указатель на левого потомка
+        /// </summary>
+        public TBinaryTree Left { get; set; }
+        /// <summary>
+        /// Указатель на правого потомка
+        /// </summary>
+        public TBinaryTree Right { get; set; }
         public TBinaryTree()
         {
             Data = null;
-            left = right = null;
+            Left = Right = null;
         }
         public TBinaryTree(Id valueData)
         {
             Data = valueData;
-            left = right = null;
+            Left = Right = null;
         }
         public void Add(Id elem)
         {
-            if (Data == null)
+            if (Data is null)
             {
                 Data = elem;
                 return;
@@ -35,25 +42,25 @@ namespace ParsingStructs
             {
                 anc = cur;
                 if (elem < cur.Data)
-                    cur = cur.left;
+                    cur = cur.Left;
                 else if (elem > cur.Data)
-                    cur = cur.right;
+                    cur = cur.Right;
                 else
                     return;
             }
             cur = new TBinaryTree(elem);
             if (cur.Data > anc.Data)
-                anc.right = cur;
+                anc.Right = cur;
             else
-                anc.left = cur;
+                anc.Left = cur;
         }
         public void Show(int indent = 0)
         {
-            if (left != null)
-                left.Show(indent + 3);
+            if (Left != null)
+                Left.Show(indent + 3);
             Console.WriteLine(new String(' ', indent) + Data);
-            if (right != null)
-                right.Show(indent + 3);
+            if (Right != null)
+                Right.Show(indent + 3);
         }
     }
 }

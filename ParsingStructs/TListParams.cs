@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
+    [Serializable]
     /// <summary>
     /// Класс, представляющий собой список параметров для объекта-идентификатора <see cref="TMethod"/>
     /// </summary>
@@ -78,7 +79,7 @@ namespace ParsingStructs
             TListParams pntr = this;
             while (pntr != null)
             {
-                cur += pntr;
+                cur += pntr.data;
                 pntr = pntr.next;
             }
             return cur;

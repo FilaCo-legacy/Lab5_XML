@@ -60,7 +60,7 @@ namespace Id_tree_Serializing
                     curItem = items.Length - 1;
                 if (choice)
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.CursorVisible = true;
                     Console.Clear();
@@ -71,21 +71,37 @@ namespace Id_tree_Serializing
             Console.CursorVisible = true;
             return curItem;
         }
-        static void BinarySerialize(TBinaryTree root, string fileName)
+        static void BinarySerialize(string fileName, TBinaryTree root)
         {
-
+            using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(fs, root);
+            }
         }
-        static void XmlSerialize(TBinaryTree root, string fileName)
+        static void XmlSerialize(string fileName, TBinaryTree root)
         {
-
+            using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(TBinaryTree));
+                xs.Serialize(fs, root);
+            }
         }
         static void BinaryDeserialize(string fileName, out TBinaryTree root)
         {
-
+            using(FileStream fs = new FileStream(fileName, FileMode.Open))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                root = (TBinaryTree)bf.Deserialize(fs);
+            }
         }
         static void XmlDeserialize(string fileName, out TBinaryTree root)
         {
-
+            using (FileStream fs = new FileStream(fileName, FileMode.Open))
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(TBinaryTree));
+                root = (TBinaryTree)xs.Deserialize(fs);
+            }
         }
         static void LoadFromFile(string fileName, out TBinaryTree root)
         {
@@ -101,9 +117,85 @@ namespace Id_tree_Serializing
                 }
             }
         }
+        static string InputFileName()
+        {
+            Console.WriteLine("Введите имя файла:");
+            return Console.ReadLine();
+        }
         static void Main(string[] args)
         {
-            
+            TBinaryTree root = null;
+            while (true)
+            {
+                switch (Menu("Выберите действие", "Загрузить дерево из файла", "Выполнить бинарную сериализацию",
+                    "Выполнить XML-сериализацию", "Выполнить бинарную десериализацию", "Выполнить XML-десериализацию", 
+                    "Показать дерево", "Выход"))
+                {
+                    case 0:
+                        try
+                        {
+                            LoadFromFile(InputFileName(), out root);
+                            Console.WriteLine("Загрузка дерева из файла прошла успешно.");
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine($"Произошла ошибка: {e.Message}\nПопробуйте ещё раз.");
+                        }
+                        break;
+                    case 1:
+                        try
+                        {
+                            BinarySerialize(InputFileName(), root);
+                            Console.WriteLine("Бинарная сериализация дерева прошла успешно.");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Произошла ошибка: {e.Message}\nПопробуйте ещё раз.");
+                        }
+                        break;
+                    case 2:
+                        try
+                        {
+                            XmlSerialize(InputFileName(), root);
+                            Console.WriteLine("XML-сериализация дерева прошла успешно.");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Произошла ошибка: {e.Message}\nПопробуйте ещё раз.");
+                        }
+                        break;
+                    case 3:
+                        try
+                        {
+                            BinaryDeserialize(InputFileName(), out root);
+                            Console.WriteLine("Бинарная десериализация дерева прошла успешно.");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Произошла ошибка: {e.Message}\nПопробуйте ещё раз.");
+                        }
+                        break;
+                    case 4:
+                        try
+                        {
+                            XmlDeserialize(InputFileName(), out root);
+                            Console.WriteLine("XML-десериализация дерева прошла успешно.");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Произошла ошибка: {e.Message}\nПопробуйте ещё раз.");
+                        }
+                        break;
+                    case 5:
+                        if (root != null)
+                            root.Show();
+                        break;
+                    case 6:
+                        return;
+                }
+                Console.WriteLine("Для продолжения нажмите Enter...");
+                Console.ReadLine();
+            }
         }
     }
 }

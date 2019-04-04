@@ -2,10 +2,12 @@
 
 namespace ParsingStructs
 {
+    [Serializable]
     /// <summary>
     /// Представляет собой возможные типы <see cref="Id"/>
     /// </summary>
     public enum TypeIdent { CLASSES, CONSTS, VARS, METHODS, eCOUNT };
+    [Serializable]
     /// <summary>
     /// Представляет собой возможные типы значения
     /// </summary>
@@ -24,7 +26,7 @@ namespace ParsingStructs
         /// <summary>
         /// Значение хэш-функции от имени идентификатора
         /// </summary>
-        protected int hashVal;
+        protected int hashVal => GetHashCode();
         /// <summary>
         /// Тип идентификатора
         /// </summary>
@@ -78,7 +80,7 @@ namespace ParsingStructs
         /// <returns></returns>
         public override int GetHashCode()
         {
-            const int P = 53;
+            const int P = 257;
             int pPow = 1, hash = 0;
             for (int i = 0; i < Name.Length; ++i)
             {
@@ -97,7 +99,7 @@ namespace ParsingStructs
             for (int i = 0; i < (int)TypeIdent.eCOUNT; ++i)
             {
                 curId = dispatcher[i].Invoke(source);
-                if (curId != null)                
+                if (!(curId is null))                
                     return curId;                
             }
             throw new Exception("The input string has wrong format.");

@@ -3,10 +3,12 @@ using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
+    [Serializable]
     /// <summary>
     /// Представляет собой возможные методы передачи параметров в <see cref="TMethod"/>
     /// </summary>
     public enum TypeParam { param_val, param_ref, param_out};
+    [Serializable]
     /// <summary>
     /// Класс, представляющий собой параметр в идентификаторе <see cref="TMethod"/>
     /// </summary>

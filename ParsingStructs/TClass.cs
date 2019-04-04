@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
+    [Serializable]
     /// <summary>
     /// Класс, представляющий собой тип идентификатора "класс"
     /// </summary>
