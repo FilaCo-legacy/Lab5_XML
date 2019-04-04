@@ -108,12 +108,21 @@ namespace Id_tree_Serializing
             root = new TBinaryTree();
             using (StreamReader sr = new StreamReader(fileName))
             {
+                int iter = 1;
                 while (!sr.EndOfStream)
                 {
                     string curSource = sr.ReadLine();
                     curSource = regRemoveSpaces.Replace(curSource, " ");
                     curSource = curSource.Trim(' ');
-                    root.Add(Id.CreateIdFromSource(curSource));
+                    try
+                    {
+                        root.Add(Id.CreateIdFromSource(curSource));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Line {iter} syntax error: {e.Message}");
+                    }
+                    ++iter;
                 }
             }
         }

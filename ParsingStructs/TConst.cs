@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
-    [Serializable]
     /// <summary>
     /// Класс, представляющий собой идентификатор "константу"
     /// </summary>
@@ -20,6 +19,10 @@ namespace ParsingStructs
         /// Значение, записанное в константе
         /// </summary>
         public object Value => value;
+        public TConst()
+        {
+
+        }
         /// <summary>
         /// Инициализирует объект класса <see cref="TConst"/> на основе информации из переданной строки
         /// </summary>

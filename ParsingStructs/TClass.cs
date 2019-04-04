@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
-    [Serializable]
     /// <summary>
     /// Класс, представляющий собой тип идентификатора "класс"
     /// </summary>
@@ -11,6 +10,10 @@ namespace ParsingStructs
     {
         private const string PATTERN_CLASS = @"^class\s+(?!(ref|out|int|char|bool|string|float)\s*;)[^\d\s]\w*\s*;$";
         private static Regex reg = new Regex(PATTERN_CLASS);
+        public TClass()
+        {
+
+        }
         /// <summary>
         /// Инициализирует объект класса <see cref="TClass"/> на основе информации из переданной строки
         /// </summary>

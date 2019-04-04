@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
-    [Serializable]
     /// <summary>
     /// Класс, представляющий собой список параметров для объекта-идентификатора <see cref="TMethod"/>
     /// </summary>
@@ -22,6 +21,10 @@ namespace ParsingStructs
         /// Объект, описывающий текущий параметр
         /// </summary>
         private TParam data;
+        public TListParams()
+        {
+
+        }
         /// <summary>
         /// Инициализирует новую коллекцию <see cref="TListParams"/> из одного корневого элемента
         /// </summary>

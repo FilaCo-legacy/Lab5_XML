@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
-    [Serializable]
     /// <summary>
     /// Класс, представляющий собой идентификатор типа "переменная"
     /// </summary>
@@ -11,6 +10,10 @@ namespace ParsingStructs
     {
         private const string PATTERN_VAR = @"^\w+\s+(?!(ref|out|int|char|bool|string|float)\s*;)[^\d\s]\w*\s*;$";
         private static Regex reg = new Regex(PATTERN_VAR);
+        public TVar()
+        {
+
+        }
         /// <summary>
         /// Инициализирует объект класса <see cref="TVar"/> на основе информации из переданной строки
         /// </summary>

@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
-    [Serializable]
     /// <summary>
     /// Класс, представляющий собой идентификатор типа "метод"
     /// </summary>
@@ -15,6 +14,10 @@ namespace ParsingStructs
         private static string PATTERN_METHOD = @"^\w+\s+(?!(ref|out|int|char|bool|string|float)\s*\()[^\d\s]\w*\s*\(.*\)\s*;$";
         private static Regex reg = new Regex(PATTERN_METHOD);
         private TListParams listParams;
+        public TMethod()
+        {
+
+        }
         /// <summary>
         /// Инициализирует объект класса <see cref="TMethod"/> на основе информации из переданной строки
         /// </summary>

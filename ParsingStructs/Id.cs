@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace ParsingStructs
 {
@@ -14,6 +15,7 @@ namespace ParsingStructs
     public enum TypeValue { int_type, float_type, bool_type, char_type, string_type, class_type, eCOUNT };
     public delegate Id CheckSource(string source);
     [Serializable]
+    [XmlInclude(typeof(TVar)), XmlInclude(typeof(TClass)), XmlInclude(typeof(TConst)), XmlInclude(typeof(TMethod))]
     /// <summary>
     /// Класс, представляющий собой идентификатор в дереве
     /// </summary>
@@ -26,7 +28,7 @@ namespace ParsingStructs
         /// <summary>
         /// Значение хэш-функции от имени идентификатора
         /// </summary>
-        protected int hashVal => GetHashCode();
+        protected int hashVal => GetHashCode();        
         /// <summary>
         /// Тип идентификатора
         /// </summary>
