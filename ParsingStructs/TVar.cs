@@ -29,5 +29,15 @@ namespace ParsingStructs
             DefineTypeValue(inp[0]);
             Name = inp[1];
         }
+        /// <summary>
+        /// Инициализирует (если возможно) объект класса <see cref="TVar"/> на основе информации из переданной строки
+        /// </summary>
+        /// <param name="source">Строка с информацией о новом объекте класса <see cref="TVar"/></param>
+        public static TVar CreateFromSource(string source)
+        {
+            if (reg.IsMatch(source))
+                return new TVar(source);
+            return null;
+        }
     }
 }

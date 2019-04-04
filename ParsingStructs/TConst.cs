@@ -83,15 +83,16 @@ namespace ParsingStructs
                     throw new Exception("Undefined value type.");
             }
             Name = inp[2];
-        }  
+        }
         /// <summary>
-        /// Проверяет, является ли поданная на вход строка корректной для данного типа идентификатора
+        /// Инициализирует (если возможно) объект класса <see cref="TConst"/> на основе информации из переданной строки
         /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>  
-        public static bool IsCorrectSourceString(string source)
+        /// <param name="source">Строка с информацией о новом объекте класса <see cref="TConst"/></param>
+        public static TConst CreateFromSource(string source)
         {
-            return reg.IsMatch(source);
+            if (reg.IsMatch(source))
+                return new TConst(source);
+            return null;
         }
     }
     

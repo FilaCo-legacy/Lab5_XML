@@ -64,13 +64,14 @@ namespace ParsingStructs
             listParams = new TListParams(argsPart);
         }
         /// <summary>
-        /// Проверяет, является ли поданная на вход строка корректной для данного типа идентификатора
+        /// Инициализирует (если возможно) объект класса <see cref="TMethod"/> на основе информации из переданной строки
         /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>  
-        public static bool IsCorrectSourceString(string source)
+        /// <param name="source">Строка с информацией о новом объекте класса <see cref="TMethod"/></param>
+        public static TMethod CreateFromSource(string source)
         {
-            return reg.IsMatch(source);
+            if (reg.IsMatch(source))
+                return new TMethod(source);
+            return null;
         }
     }
 }

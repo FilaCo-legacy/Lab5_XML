@@ -29,13 +29,14 @@ namespace ParsingStructs
             Name = inp[1];            
         }
         /// <summary>
-        /// Проверяет, является ли поданная на вход строка корректной для данного типа идентификатора
+        /// Инициализирует (если возможно) объект класса <see cref="TClass"/> на основе информации из переданной строки
         /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>  
-        public static bool IsCorrectSourceString(string source)
+        /// <param name="source">Строка с информацией о новом объекте класса <see cref="TClass"/></param>
+        public static TClass CreateFromSource(string source)
         {
-            return reg.IsMatch(source);
+            if (reg.IsMatch(source))
+                return new TClass(source);
+            return null;
         }
     }
 }

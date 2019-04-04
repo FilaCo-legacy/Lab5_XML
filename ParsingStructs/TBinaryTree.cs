@@ -1,31 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParsingStructs
 {
+    [Serializable]
     /// <summary>
     /// Класс, реализующий дерево идентификаторов
     /// </summary>
-    class BinaryTree
+    public class TBinaryTree
     {
-        private BinaryTree left, right;
+        private TBinaryTree left, right;
+        /// <summary>
+        /// Идентификатор, хранящийся в вершине дерева
+        /// </summary>
         public Id Data { get; set; }
-        public BinaryTree()
+        public TBinaryTree()
         {
             Data = null;
             left = right = null;
         }
-        public BinaryTree(Id valueData)
+        public TBinaryTree(Id valueData)
         {
             Data = valueData;
             left = right = null;
         }
         public void Add(Id elem)
         {
-            if (elem > Data)
+            if (Data == null)
+            {
+                Data = elem;
+                return;
+            }
+            TBinaryTree cur = this, anc = null;
+            while (cur != null)
+            {
+                anc = cur;
+                if (elem < cur.Data)
+                    cur = cur.left;
+                else if (elem > cur.Data)
+                    cur = cur.right;
+                else
+                    return;
+            }
+            cur = new TBinaryTree(elem);
+            if (cur.Data > anc.Data)
+                anc.right = cur;
+            else
+                anc.left = cur;
         }
         public void Show(int indent = 0)
         {

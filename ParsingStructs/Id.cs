@@ -10,12 +10,15 @@ namespace ParsingStructs
     /// Представляет собой возможные типы значения
     /// </summary>
     public enum TypeValue { int_type, float_type, bool_type, char_type, string_type, class_type, eCOUNT };
+    public delegate Id CheckSource(string source);
     [Serializable]
     /// <summary>
     /// Класс, представляющий собой идентификатор в дереве
     /// </summary>
     public abstract class Id
     {
+        private static CheckSource[]dispatcher = {TClass.CreateFromSource, TConst.CreateFromSource,
+            TVar.CreateFromSource, TMethod.CreateFromSource};
         protected TypeIdent typeId;        
         protected TypeValue typeVal;
         /// <summary>
@@ -34,6 +37,7 @@ namespace ParsingStructs
         /// Имя идентификатора
         /// </summary>
         public string Name { get; set; }
+        public static CheckSource[] Dispatcher => dispatcher;
         /// <summary>
         /// Выделение информации об объекте класса из строки ввода
         /// </summary>
@@ -87,5 +91,16 @@ namespace ParsingStructs
         public static bool operator >(Id ident1, Id ident2) => ident1.GetHashCode() > ident2.GetHashCode();
         public static bool operator ==(Id ident1, Id ident2) => ident1.GetHashCode() == ident2.GetHashCode();
         public static bool operator !=(Id ident1, Id ident2) => ident1.GetHashCode() != ident2.GetHashCode();
+        public static Id CreateIdFromSource(string source)
+        {
+            Id curId = null;
+            for (int i = 0; i < (int)TypeIdent.eCOUNT; ++i)
+            {
+                curId = dispatcher[i].Invoke(source);
+                if (curId != null)                
+                    return curId;                
+            }
+            throw new Exception("The input string has wrong format.");
+        }
     }
 }
