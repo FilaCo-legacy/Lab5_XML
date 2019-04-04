@@ -1,4 +1,6 @@
-﻿
+﻿using System;
+using System.Text.RegularExpressions;
+
 namespace ParsingStructs
 {
     /// <summary>
@@ -10,6 +12,12 @@ namespace ParsingStructs
     /// </summary>
     public class TParam 
     {
+        /// <summary>
+        /// Регулярное выражение для проверки, описывает ли строка какой-то аргумент функции
+        /// </summary>
+        private const string PATTERN_PARAM =
+            @"^(ref\s+|out\s+)?(?!(ref|out)\s)[^\d\s]\w*\s+(?!(ref|out|int|char|bool|string|float)$)[^\d\s]\w*$";
+        private static Regex reg = new Regex(PATTERN_PARAM);
         private TypeValue typeVal;
         private TypeParam typeParam;
         /// <summary>
@@ -21,15 +29,20 @@ namespace ParsingStructs
         /// </summary>
         public TypeParam TypePar => typeParam;
         /// <summary>
-        /// Инициализирует объект класса <see cref="TParam"/> с заданным именем, типом значения и методом передачи параметра
+        /// Инициализирует объект класса <see cref="TParam"/> на основе информации из переданной строки
         /// </summary>
-        /// <param name="valueName">Имя нового объекта класса <see cref="TParam"/></param>
-        /// <param name="valueType">Тип значения нового объекта класса <see cref="TParam"/></param>
-        /// <param name="valueParamType">Метод передачи параметра</param>
-        public TParam(string valueName, TypeValue valueType, TypeParam valueParamType)
+        /// <param name="source">Строка с информацией о новом объекте класса <see cref="TParam"/></param>
+        public TParam(string source)
         {
-            typeVal = valueType;
-            typeParam = valueParamType;
+            Parse(source);
+        }
+        /// <summary>
+        /// Выделение информации об объекте класса из строки ввода
+        /// </summary>
+        /// <param name="source"></param>
+        private void Parse(string source)
+        {
+            source = source.Trim(' ');
         }
         /// <summary>
         /// Возвращает информацию о типе значения и методе передачи параметра

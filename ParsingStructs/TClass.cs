@@ -8,7 +8,7 @@ namespace ParsingStructs
     /// </summary>
     public class TClass : Id
     {
-        private const string PATTERN_CLASS = @"(?<=^|\s)\s*class\s+\w+\s*;(?=$|\s)";
+        private const string PATTERN_CLASS = @"^class\s+(?!(ref|out|int|char|bool|string|float)\s*;)[^\d\s]\w*\s*;$";
         private static Regex reg = new Regex(PATTERN_CLASS);
         /// <summary>
         /// Инициализирует объект класса <see cref="TClass"/> на основе информации из переданной строки
@@ -24,9 +24,8 @@ namespace ParsingStructs
         {
             if (!reg.IsMatch(source))
                 throw new Exception("Input string has wrong format.");
-            source = source.Trim(' ', '\n', '\r', ';');
-            Regex regRemoveSpaces = new Regex(@"\s+");
-            string[] inp = regRemoveSpaces.Split(source);
+            source = source.Trim(' ', ';');
+            string[] inp = source.Split(' ');
             Name = inp[1];            
         }
         /// <summary>

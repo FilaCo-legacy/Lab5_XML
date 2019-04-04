@@ -1,25 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ParsingStructs
 {
     /// <summary>
     /// Класс, представляющий собой идентификатор типа "переменная"
     /// </summary>
-    public class TVar:Id
+    public class TVar : Id
     {
+        private const string PATTERN_VAR = @"^\w+\s+(?!(ref|out|int|char|bool|string|float)\s*;)[^\d\s]\w*\s*;$";
         /// <summary>
-        /// Инициализирует новый объект класса <see cref="TVar"/> с заданным именем и типом значения
+        /// Инициализирует объект класса <see cref="TVar"/> на основе информации из переданной строки
         /// </summary>
-        /// <param name="valueName">Имя нового идентификатора</param>
-        /// <param name="valueTypeVal">Тип значения нового идентификатора</param>
-        public TVar(string valueName, TypeValue valueTypeVal) : base(valueName)
+        /// <param name="source">Строка с информацией о новом объекте класса <see cref="TVar"/></param>
+        public TVar(string source)
         {
-            typeId = TypeIdent.VAR;
-            typeVal = valueTypeVal;
+            typeId = TypeIdent.VARS;
+            Parse(source);
+        }
+        protected override void Parse(string source)
+        {
+            source = source.Trim(';', ' ');
         }
     }
 }

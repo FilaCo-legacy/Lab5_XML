@@ -1,4 +1,5 @@
-﻿namespace ParsingStructs
+﻿
+namespace ParsingStructs
 {
     /// <summary>
     /// Представляет собой возможные типы <see cref="Id"/>

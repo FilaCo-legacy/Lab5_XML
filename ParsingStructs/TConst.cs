@@ -8,7 +8,11 @@ namespace ParsingStructs
     /// </summary>
     public class TConst:Id
     {
-        private const string PATTERN_CONST = @"(?<=^|\s)\s*const\s+\w+\s+\w+\s+=\s+[\w\d,""'-]+;(?=$|\s)";
+        /// <summary>
+        /// Регулярное выражение для проверки, описывает ли строка какую-то константу
+        /// </summary>
+        private const string PATTERN_CONST =
+            @"^const\s+\w+\s+(?!(ref|out|int|char|bool|string|float)\s*=)[^\d\s]\w*\s*=\s*[\w\d,""'-]+\s*;$";
         private static Regex reg = new Regex(PATTERN_CONST);
         private object value;
         /// <summary>
@@ -36,41 +40,42 @@ namespace ParsingStructs
         {
             if (!reg.IsMatch(source))
                 throw new Exception("Input string has wrong format.");
-            source = source.Trim(' ', '\n', '\r', ';');
+            source = source.Trim(';', ' ');
             source = source.Replace('=', ' ');
             Regex regRemoveSpaces = new Regex(@"\s+");
-            string[] inp = regRemoveSpaces.Split(source);            
+            string[] inp = regRemoveSpaces.Split(source);
+            // Определение типа значения константы и проверка корректности
             switch (inp[1])
             {
                 case "int":
-                    {
-                        int tmp;
-                        if (!int.TryParse(inp[3], out tmp))
+                    {                        
+                        if (!int.TryParse(inp[3], out int tmp))
                             throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.int_type}.");
+                        typeVal = TypeValue.int_type;
                         value = tmp;
                         break;
                     }
                 case "float":
                     {
-                        float tmp;
-                        if (!float.TryParse(inp[3], out tmp))
+                        if (!float.TryParse(inp[3], out float tmp))
                             throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.float_type}.");
+                        typeVal = TypeValue.float_type;
                         value = tmp;
                         break;
                     }
                 case "bool":
                     {
-                        bool tmp;
-                        if (!bool.TryParse(inp[3], out tmp))
+                        if (!bool.TryParse(inp[3], out bool tmp))
                             throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.bool_type}.");
+                        typeVal = TypeValue.bool_type;
                         value = tmp;
                         break;
                     }
                 case "char":
                     {
-                        char tmp;
-                        if (!char.TryParse(inp[3], out tmp))
+                        if (!char.TryParse(inp[3], out char tmp))
                             throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.char_type}.");
+                        typeVal = TypeValue.char_type;
                         value = tmp;
                         break;
                     }
