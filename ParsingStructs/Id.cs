@@ -23,18 +23,21 @@ namespace ParsingStructs
     {
         private static CheckSource[]dispatcher = {TClass.CreateFromSource, TConst.CreateFromSource,
             TVar.CreateFromSource, TMethod.CreateFromSource};
+        [XmlElement(ElementName = "Тип_идентификатора")]
         /// <summary>
         /// Тип идентификатора
         /// </summary>
         public TypeIdent TypeId { get; set; }
+        [XmlElement(ElementName = "Тип_значения")]
         /// <summary>
         /// Тип значения в идентификаторе
         /// </summary>
-         public TypeValue TypeVal { get; set; }
+        public TypeValue TypeVal { get; set; }
         /// <summary>
         /// Значение хэш-функции от имени идентификатора
         /// </summary>
-        protected int hashVal => GetHashCode();        
+        protected int hashVal => GetHashCode();
+        [XmlElement(ElementName = "Имя")]
         /// <summary>
         /// Имя идентификатора
         /// </summary>

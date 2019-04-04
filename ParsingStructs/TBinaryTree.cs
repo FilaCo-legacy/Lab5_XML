@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace ParsingStructs
 {
     [Serializable]
+    [XmlRoot(ElementName = "Дерево_идентификаторов")]
     /// <summary>
     /// Класс, реализующий дерево идентификаторов
     /// </summary>
     public class TBinaryTree
     {        
+        [XmlElement(ElementName = "Вершина")]
         /// <summary>
         /// Идентификатор, хранящийся в вершине дерева
         /// </summary>
