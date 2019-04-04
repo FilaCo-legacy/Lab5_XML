@@ -23,20 +23,18 @@ namespace ParsingStructs
     {
         private static CheckSource[]dispatcher = {TClass.CreateFromSource, TConst.CreateFromSource,
             TVar.CreateFromSource, TMethod.CreateFromSource};
-        protected TypeIdent typeId;        
-        protected TypeValue typeVal;
+        /// <summary>
+        /// Тип идентификатора
+        /// </summary>
+        public TypeIdent TypeId { get; set; }
+        /// <summary>
+        /// Тип значения в идентификаторе
+        /// </summary>
+         public TypeValue TypeVal { get; set; }
         /// <summary>
         /// Значение хэш-функции от имени идентификатора
         /// </summary>
         protected int hashVal => GetHashCode();        
-        /// <summary>
-        /// Тип идентификатора
-        /// </summary>
-        public TypeIdent TypeId => typeId;
-        /// <summary>
-        /// Тип значения в идентификаторе
-        /// </summary>
-        public TypeValue TypeVal => typeVal;
         /// <summary>
         /// Имя идентификатора
         /// </summary>
@@ -56,25 +54,28 @@ namespace ParsingStructs
             switch (input)
             {
                 case "int":
-                    typeVal = TypeValue.int_type;
+                    TypeVal = TypeValue.int_type;
                     break;
                 case "float":
-                    typeVal = TypeValue.float_type;
+                    TypeVal = TypeValue.float_type;
                     break;
                 case "bool":
-                    typeVal = TypeValue.bool_type;
+                    TypeVal = TypeValue.bool_type;
                     break;
                 case "char":
-                    typeVal = TypeValue.char_type;
+                    TypeVal = TypeValue.char_type;
+                    break;
+                case "string":
+                    TypeVal = TypeValue.string_type;
                     break;
                 default:
-                    typeVal = TypeValue.class_type;
+                    TypeVal = TypeValue.class_type;
                     break;
             }
         }
         public override string ToString()
         {
-            return string.Format($"{Name} | {hashVal} | {typeId} | {typeVal}");
+            return string.Format($"{Name} | {hashVal} | {TypeId} | {TypeVal}");
         }
         /// <summary>
         /// Возвращает значение хэш-функции от имени идентификатора (полиномиальное хэширование)

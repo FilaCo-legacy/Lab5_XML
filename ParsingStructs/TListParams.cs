@@ -6,7 +6,7 @@ namespace ParsingStructs
     /// <summary>
     /// Класс, представляющий собой список параметров для объекта-идентификатора <see cref="TMethod"/>
     /// </summary>
-    class TListParams
+    public class TListParams
     {
         /// <summary>
         /// Регулярное выражение для проверки, описывает ли строка какой-то список аргументов функции
@@ -16,11 +16,11 @@ namespace ParsingStructs
         /// <summary>
         /// Следующий элемент в списке параметров
         /// </summary>
-        private TListParams next;
+        public TListParams Next { get; set; }
         /// <summary>
         /// Объект, описывающий текущий параметр
         /// </summary>
-        private TParam data;
+        public TParam Data { get; set; }
         public TListParams()
         {
 
@@ -31,8 +31,8 @@ namespace ParsingStructs
         /// <param name="elem"></param>
         public TListParams (TParam elem)
         {
-            data = elem;
-            next = null;
+            Data = elem;
+            Next = null;
         }
         /// <summary>
         /// Инициализирует новую коллекцию <see cref="TListParams"/> из строки, содержащей информацию о параметрах метода
@@ -52,13 +52,13 @@ namespace ParsingStructs
                 throw new Exception("Input string has syntax error: it's not the arguments string");
             source = source.Trim('(', ')');
             string[] inp = source.Split(',');
-            data = new TParam(inp[0]);
+            Data = new TParam(inp[0]);
             TListParams cur = this;
             for (int i = 1; i < inp.Length; ++i)
             {
                 TParam elem = new TParam(inp[i]);
-                cur.next = new TListParams(elem);
-                cur = cur.next;
+                cur.Next = new TListParams(elem);
+                cur = cur.Next;
             }
         }
         /// <summary>
@@ -68,9 +68,9 @@ namespace ParsingStructs
         public void AddEnd(TParam elem)
         {
             TListParams cur = this;
-            while (cur.next != null)
-                cur = cur.next;
-            cur.next = new TListParams(elem);
+            while (cur.Next != null)
+                cur = cur.Next;
+            cur.Next = new TListParams(elem);
         }
         /// <summary>
         /// Возвращает строку с информацией обо всех элементах коллекции
@@ -82,8 +82,8 @@ namespace ParsingStructs
             TListParams pntr = this;
             while (pntr != null)
             {
-                cur += pntr.data;
-                pntr = pntr.next;
+                cur += pntr.Data;
+                pntr = pntr.Next;
             }
             return cur;
         }

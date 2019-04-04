@@ -20,8 +20,8 @@ namespace ParsingStructs
         /// <param name="source">Строка с информацией о новом объекте класса <see cref="TClass"/></param>
         public TClass(string source)
         {
-            typeId = TypeIdent.CLASSES;
-            typeVal = TypeValue.class_type;
+            TypeId = TypeIdent.CLASSES;
+            TypeVal = TypeValue.class_type;
             Parse(source);
         }
         protected override void Parse(string source)

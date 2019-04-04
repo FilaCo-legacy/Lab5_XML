@@ -13,7 +13,7 @@ namespace ParsingStructs
         /// </summary>
         private static string PATTERN_METHOD = @"^\w+\s+(?!(ref|out|int|char|bool|string|float)\s*\()[^\d\s]\w*\s*\(.*\)\s*;$";
         private static Regex reg = new Regex(PATTERN_METHOD);
-        private TListParams listParams;
+        public TListParams ListParams { get; set; }
         public TMethod()
         {
 
@@ -24,7 +24,7 @@ namespace ParsingStructs
         /// <param name="source">Строка с информацией о новом объекте класса <see cref="TMethod"/></param>
         public TMethod(string source)
         {
-            typeId = TypeIdent.METHODS;            
+            TypeId = TypeIdent.METHODS;            
             Parse(source);
         }
         /// <summary>
@@ -53,7 +53,7 @@ namespace ParsingStructs
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString() + listParams;
+            return base.ToString() + ListParams;
         }
         protected override void Parse(string source)
         {
@@ -65,7 +65,7 @@ namespace ParsingStructs
             // Определение типа значения метода
             DefineTypeValue(inp[0]);
             Name = inp[1];
-            listParams = new TListParams(argsPart);
+            ListParams = new TListParams(argsPart);
         }
         /// <summary>
         /// Инициализирует (если возможно) объект класса <see cref="TMethod"/> на основе информации из переданной строки

@@ -20,7 +20,7 @@ namespace ParsingStructs
         /// <param name="source">Строка с информацией о новом объекте класса <see cref="TVar"/></param>
         public TVar(string source)
         {
-            typeId = TypeIdent.VARS;
+            TypeId = TypeIdent.VARS;
             Parse(source);
         }
         protected override void Parse(string source)

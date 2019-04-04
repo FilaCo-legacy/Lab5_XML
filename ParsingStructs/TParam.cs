@@ -18,16 +18,14 @@ namespace ParsingStructs
         private const string PATTERN_PARAM =
             @"^(ref\s+|out\s+)?(?!(ref|out)\s)[^\d\s]\w*\s+(?!(ref|out|int|char|bool|string|float)$)[^\d\s]\w*$";
         private static Regex reg = new Regex(PATTERN_PARAM);
-        private TypeValue typeVal;
-        private TypeParam typeParam;
         /// <summary>
         /// Тип значения параметра
         /// </summary>
-        public TypeValue TypeVal => typeVal;
+        public TypeValue TypeVal { get; set; }
         /// <summary>
         /// Метод передачи параметра
         /// </summary>
-        public TypeParam TypePar => typeParam;
+        public TypeParam TypeParam { get; set; }
         /// <summary>
         /// Определяет по строке тип значения идентификатора
         /// </summary>
@@ -37,19 +35,19 @@ namespace ParsingStructs
             switch (input)
             {
                 case "int":
-                    typeVal = TypeValue.int_type;
+                    TypeVal = TypeValue.int_type;
                     break;
                 case "float":
-                    typeVal = TypeValue.float_type;
+                    TypeVal = TypeValue.float_type;
                     break;
                 case "bool":
-                    typeVal = TypeValue.bool_type;
+                    TypeVal = TypeValue.bool_type;
                     break;
                 case "char":
-                    typeVal = TypeValue.char_type;
+                    TypeVal = TypeValue.char_type;
                     break;
                 default:
-                    typeVal = TypeValue.class_type;
+                    TypeVal = TypeValue.class_type;
                     break;
             }
         }
@@ -78,13 +76,13 @@ namespace ParsingStructs
             switch (inp[0])
             {
                 case "ref":
-                    typeParam = TypeParam.param_ref;
+                    TypeParam = TypeParam.param_ref;
                     break;
                 case "out":
-                    typeParam = TypeParam.param_out;
+                    TypeParam = TypeParam.param_out;
                     break;
                 default:
-                    typeParam = TypeParam.param_val;
+                    TypeParam = TypeParam.param_val;
                     DefineTypeValue(inp[0]);
                     return;
             }
@@ -96,7 +94,7 @@ namespace ParsingStructs
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format($"->|| {TypeVal} | {TypePar} ||");
+            return string.Format($"->|| {TypeVal} | {TypeParam} ||");
         }
     }
 }

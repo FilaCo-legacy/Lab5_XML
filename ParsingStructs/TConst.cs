@@ -14,11 +14,10 @@ namespace ParsingStructs
         private const string PATTERN_CONST =
             @"^const\s+\w+\s+(?!(ref|out|int|char|bool|string|float)\s*=)[^\d\s]\w*\s*=\s*[\w\d,""'-]+\s*;$";
         private static Regex reg = new Regex(PATTERN_CONST);
-        private object value;
         /// <summary>
         /// Значение, записанное в константе
         /// </summary>
-        public object Value => value;
+        public object Value { get; set; }        
         public TConst()
         {
 
@@ -29,7 +28,7 @@ namespace ParsingStructs
         /// <param name="source">Строка с информацией о новом объекте класса <see cref="TConst"/></param>
         public TConst(string source)
         {
-            typeId = TypeIdent.CONSTS;
+            TypeId = TypeIdent.CONSTS;
             Parse(source);
         }
         /// <summary>
@@ -38,7 +37,7 @@ namespace ParsingStructs
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString() + string.Format($" | {value}");
+            return base.ToString() + string.Format($" | {Value}");
         }
         protected override void Parse(string source)
         {
@@ -55,36 +54,44 @@ namespace ParsingStructs
                     {                        
                         if (!int.TryParse(inp[3], out int tmp))
                             throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.int_type}.");
-                        typeVal = TypeValue.int_type;
-                        value = tmp;
+                        TypeVal = TypeValue.int_type;
+                        Value = tmp;
                         break;
                     }
                 case "float":
                     {
                         if (!float.TryParse(inp[3], out float tmp))
                             throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.float_type}.");
-                        typeVal = TypeValue.float_type;
-                        value = tmp;
+                        TypeVal = TypeValue.float_type;
+                        Value = tmp;
                         break;
                     }
                 case "bool":
                     {
                         if (!bool.TryParse(inp[3], out bool tmp))
                             throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.bool_type}.");
-                        typeVal = TypeValue.bool_type;
-                        value = tmp;
+                        TypeVal = TypeValue.bool_type;
+                        Value = tmp;
                         break;
                     }
                 case "char":
                     {
                         if (!char.TryParse(inp[3], out char tmp))
                             throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.char_type}.");
-                        typeVal = TypeValue.char_type;
-                        value = tmp;
+                        TypeVal = TypeValue.char_type;
+                        Value = tmp;
+                        break;
+                    }
+                case "string":
+                    {
+                        if (inp[3][0] != '"' || inp[3][inp[3].Length-1] != '"')
+                            throw new Exception($"Corrupted input: input object can't be converted to the {TypeValue.string_type}.");
+                        TypeVal = TypeValue.string_type;
+                        Value = inp[3].Substring(1, inp.Length-2);
                         break;
                     }
                 default:
-                    throw new Exception("Undefined value type.");
+                    throw new Exception("Undefined Value type.");
             }
             Name = inp[2];
         }
